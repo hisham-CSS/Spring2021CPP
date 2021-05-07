@@ -41,7 +41,7 @@ public class PlayerFire : MonoBehaviour
         if (marioSprite.flipX)
         {
             Projectile projectileInstance = Instantiate(projectilePrefab, spawnPointLeft.position, spawnPointLeft.rotation);
-            projectileInstance.speed = projectileSpeed;
+            projectileInstance.speed = -projectileSpeed;
         }
         else
         {
