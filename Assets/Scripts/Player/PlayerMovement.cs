@@ -77,12 +77,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!coroutineRunning)
         {
-            StartCoroutine(JumpForceChange());
+            StartCoroutine("JumpForceChange");
         }
         else
         {
-            StopCoroutine(JumpForceChange());
-            StartCoroutine(JumpForceChange());
+            StopCoroutine("JumpForceChange");
+            StartCoroutine("JumpForceChange");
         }
     }
 
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     {
         coroutineRunning = true;
         jumpForce = 600;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(10.0f);
         jumpForce = 300;
         coroutineRunning = false;
     }
