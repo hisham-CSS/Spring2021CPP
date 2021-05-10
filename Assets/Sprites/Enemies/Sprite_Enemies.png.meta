@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 764029468473576725
     second: PlayerProjectile
+  - first:
+      213: -6284743126234988054
+    second: Koopa1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -110,6 +113,27 @@ TextureImporter:
       bones: []
       spriteID: 51d4c4ae0c06a9a00800000000000000
       internalID: 764029468473576725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Koopa1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 124
+        width: 15
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae18f28bc6b18c8a0800000000000000
+      internalID: -6284743126234988054
       vertices: []
       indices: 
       edges: []
