@@ -48,6 +48,7 @@ public class PlayerFire : MonoBehaviour
             Projectile projectileInstance = Instantiate(projectilePrefab, spawnPointRight.position, spawnPointRight.rotation);
             projectileInstance.speed = projectileSpeed;
         }
+        Debug.LogError("Projectile Spawned");
     }
 
     void ResetFire()

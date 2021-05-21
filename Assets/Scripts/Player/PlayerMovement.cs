@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed;
     public int jumpForce;
+    public int bounceForce;
     public bool isGrounded;
     public LayerMask isGroundLayer;
     public Transform groundCheck;
@@ -36,6 +37,11 @@ public class PlayerMovement : MonoBehaviour
         if (jumpForce <= 0)
         {
             jumpForce = 300;
+        }
+
+        if (bounceForce <= 0)
+        {
+            bounceForce = 300;
         }
 
         if (groundCheckRadius <= 0)
@@ -93,5 +99,18 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(10.0f);
         jumpForce = 300;
         coroutineRunning = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Squish")
+        {
+            if (!isGrounded)
+            {
+                collision.gameObject.GetComponentInParent<EnemyWalker>().IsSquished();
+                rb.velocity = Vector2.zero;
+                rb.AddForce(Vector2.up * bounceForce);
+            }
+        }
     }
 }
