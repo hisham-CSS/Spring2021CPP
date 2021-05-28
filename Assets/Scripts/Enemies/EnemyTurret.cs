@@ -5,22 +5,28 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class EnemyTurret : MonoBehaviour
 {
-    public Transform projectileSpawnPoint;
+    public Transform projectileSpawnPointRight;
+    public Transform projectileSpawnPointLeft;
     public Projectile projectilePrefab;
 
     public float projectileForce;
 
     public float projectileFireRate;
-
+    public float turretFireDistance;
     float timeSinceLastFire = 0.0f;
+    bool canFire;
     public int health;
 
     Animator anim;
+    SpriteRenderer sr;
+
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
         
         if (projectileForce <= 0)
         {
@@ -42,19 +48,53 @@ public class EnemyTurret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //HINT 1 FOR LAB: CHECK SOMETHING PRIOR TO FIRING TO DETERMING WHICH DIRECTION TO FIRE - CAN ALSO INCLUDE DISTANCE
-        if (Time.time >= timeSinceLastFire + projectileFireRate)
+        if (player)
         {
-            anim.SetBool("Fire", true);
-            timeSinceLastFire = Time.time;
+            if (player.transform.position.x < transform.position.x)
+            {
+                sr.flipX = true;
+            }
+            else
+            {
+                sr.flipX = false;
+            }
+
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+
+            if (distance <= turretFireDistance)
+                canFire = true;
+            else
+                canFire = false;
+
+            //HINT 1 FOR LAB: CHECK SOMETHING PRIOR TO FIRING TO DETERMING WHICH DIRECTION TO FIRE - CAN ALSO INCLUDE DISTANCE
+            if (Time.time >= timeSinceLastFire + projectileFireRate)
+            {
+                if (canFire)
+                {
+                    anim.SetBool("Fire", true);
+                    timeSinceLastFire = Time.time;
+                }
+            }
+        }
+        else
+        {
+            if (GameManager.instance.playerInstance)
+                player = GameManager.instance.playerInstance;
         }
     }
 
     public void Fire()
     {
-        //HINT 2 FOR LAB: IF YOU KNOW THE DIRECTION - YOU CAN ADD LOGIC HERE TO FIRE IN THAT DIRECTION
-        Projectile temp = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-        temp.speed = projectileForce;
+        if (sr.flipX)
+        {
+            Projectile temp = Instantiate(projectilePrefab, projectileSpawnPointLeft.position, projectileSpawnPointLeft.rotation);
+            temp.speed = -projectileForce;
+        }
+        else
+        {
+            Projectile temp = Instantiate(projectilePrefab, projectileSpawnPointRight.position, projectileSpawnPointRight.rotation);
+            temp.speed = projectileForce;
+        }
     }
 
     public void ReturnToIdle()

@@ -45,9 +45,10 @@ GameObject:
   - component: {fileID: 2713746685030295075}
   - component: {fileID: 2713746685030295073}
   - component: {fileID: 2713746685030295077}
+  - component: {fileID: -385693208809926017}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,13 +181,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpForce: 400
+  jumpForce: 300
+  bounceForce: 300
   isGrounded: 0
   isGroundLayer:
     serializedVersion: 2
     m_Bits: 8
   groundCheck: {fileID: 2713746683367931519}
   groundCheckRadius: 0.01
+  score: 0
+  lives: 3
 --- !u!95 &2713746685030295073
 Animator:
   serializedVersion: 3
@@ -220,8 +224,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPointLeft: {fileID: 7564216836503245944}
   spawnPointRight: {fileID: 306670215979935419}
-  projectileSpeed: 0
+  projectileSpeed: 10
   projectilePrefab: {fileID: 658196294237529343, guid: e66ea89650bfaed4696c6cca8b81ca16, type: 3}
+--- !u!114 &-385693208809926017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713746685030295086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72581950887472344872033194a2e8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5433580760771055411
 GameObject:
   m_ObjectHideFlags: 0

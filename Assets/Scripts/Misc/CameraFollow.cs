@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
     public float minXClamp = -0.29f;
     public float maxXClamp = 152.31f;
 

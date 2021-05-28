@@ -32,15 +32,11 @@ public class Pickup : MonoBehaviour
             switch (currentCollectible)
             {
                 case CollectibleType.COLLECTIBLE:
-                    PlayerMovement pmScript = collision.gameObject.GetComponent<PlayerMovement>();
-                    pmScript.score++;
-                    Debug.Log(pmScript.score);
+                    GameManager.instance.score++;
                     break;
 
                 case CollectibleType.LIVES:
-                    pmScript = collision.gameObject.GetComponent<PlayerMovement>();
-                    pmScript.lives++;
-                    Debug.Log(pmScript.lives);
+                    GameManager.instance.lives++;
                     break;
 
                 case CollectibleType.POWERUP:
