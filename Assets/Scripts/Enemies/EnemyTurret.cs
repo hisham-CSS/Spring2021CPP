@@ -28,6 +28,7 @@ public class EnemyTurret : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         
+        
         if (projectileForce <= 0)
         {
             projectileForce = 7.0f;

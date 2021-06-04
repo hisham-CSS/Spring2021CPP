@@ -29,33 +29,43 @@ public class GameManager : MonoBehaviour
 
 
     int _lives;
+
     public int lives
     {
         get { return _lives; }
         set
         {
+            currentCanvas = FindObjectOfType<CanvasManager>();
             if (_lives > value)
             {
                 Respawn();
             }
             _lives = value;
 
+            
+
             if (_lives > maxLives)
             {
                 _lives = maxLives;
             }
-            else if (_lives < 0)
+            
+            if (_lives < 0)
             {
                 //game over code goes here
+                //death animation - into load scene
+                SceneManager.LoadScene("EndGame");
             }
 
             Debug.Log("Current Lives Are: " + _lives);
+            currentCanvas.SetLivesText();
         }
     }
 
     public GameObject playerInstance;
     public GameObject playerPrefab;
     public LevelManager currentLevel;
+
+    CanvasManager currentCanvas;
     
     // Start is called before the first frame update
     void Start()
@@ -68,7 +78,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this);
-        }      
+        }
+        currentCanvas = FindObjectOfType<CanvasManager>();
     }
 
     // Update is called once per frame
@@ -80,7 +91,8 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("TitleScreen");
             else if (SceneManager.GetActiveScene().name == "TitleScreen")
                 SceneManager.LoadScene("SampleScene");
-
+            else if (SceneManager.GetActiveScene().name == "EndGame")
+                SceneManager.LoadScene("TitleScreen");
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -113,6 +125,16 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        playerInstance.transform.position = currentLevel.spawnLocation.position;
+        playerInstance.transform.position = currentLevel.spawnLocation.position;        
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("TitleScreen");
     }
 }
