@@ -189,8 +189,8 @@ MonoBehaviour:
     m_Bits: 8
   groundCheck: {fileID: 2713746683367931519}
   groundCheckRadius: 0.01
-  score: 0
-  lives: 3
+  jumpSFX: {fileID: 8300000, guid: e8f65998a1d372742bf8b482dc10b4ac, type: 3}
+  audioMixer: {fileID: 5178184326219202155, guid: 475c27f5e601fbb40af7939cd5b217e4, type: 2}
 --- !u!95 &2713746685030295073
 Animator:
   serializedVersion: 3

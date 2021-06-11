@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCollectible: 2
+  pickupAudioClip: {fileID: 8300000, guid: b0c37b076af200342af2aeade08d4001, type: 3}

@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(SpriteRenderer))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer marioSprite;
+    AudioSource pickupAudioSource;
+    AudioSource jumpAudioSource;
 
     public float speed;
     public int jumpForce;
@@ -17,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
 
-    public int score = 0;
-    public int lives = 3;
+    public AudioClip jumpSFX;
+    public AudioMixerGroup audioMixer;
 
     bool coroutineRunning = false;
 
@@ -28,7 +32,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         marioSprite = GetComponent<SpriteRenderer>();
-
+        pickupAudioSource = GetComponent<AudioSource>();
+        
         if (speed <= 0)
         {
             speed = 5.0f;
@@ -59,24 +64,36 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
-
-        if (Input.GetButtonDown("Jump"))
+        if (Time.timeScale == 1)
         {
-            rb.velocity = Vector2.zero;
-            rb.AddForce(Vector2.up * jumpForce);
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                rb.velocity = Vector2.zero;
+                rb.AddForce(Vector2.up * jumpForce);
+
+                if (!jumpAudioSource)
+                {
+                    jumpAudioSource = gameObject.AddComponent<AudioSource>();
+                    jumpAudioSource.clip = jumpSFX;
+                    jumpAudioSource.outputAudioMixerGroup = audioMixer;
+                    jumpAudioSource.loop = false;
+                }
+
+                jumpAudioSource.Play();
+            }
+
+            Vector2 moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
+            rb.velocity = moveDirection;
+
+            anim.SetFloat("speed", Mathf.Abs(horizontalInput));
+            anim.SetBool("isGrounded", isGrounded);
+
+            if (marioSprite.flipX && horizontalInput > 0 || !marioSprite.flipX && horizontalInput < 0)
+                marioSprite.flipX = !marioSprite.flipX;
         }
-
-        Vector2 moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
-        rb.velocity = moveDirection;
-
-        anim.SetFloat("speed", Mathf.Abs(horizontalInput));
-        anim.SetBool("isGrounded", isGrounded);
-
-        if (marioSprite.flipX && horizontalInput > 0 || !marioSprite.flipX && horizontalInput < 0)
-            marioSprite.flipX = !marioSprite.flipX;
-        
     }
 
     public void StartJumpForceChange()
@@ -112,5 +129,11 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector2.up * bounceForce);
             }
         }
+    }
+
+    public void CollectibleSound(AudioClip pickupAudio)
+    {
+        pickupAudioSource.clip = pickupAudio;
+        pickupAudioSource.Play();
     }
 }

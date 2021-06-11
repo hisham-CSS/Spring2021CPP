@@ -30,9 +30,12 @@ public class PlayerFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Time.timeScale == 1)
         {
-            anim.SetBool("isShooting", true);
+            if (Input.GetButtonDown("Fire1"))
+            {
+                anim.SetBool("isShooting", true);
+            }
         }
     }
 
