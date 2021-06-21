@@ -23,6 +23,9 @@ public class CanvasManager : MonoBehaviour
     public Text livesText;
     public Text volSliderText;
 
+    [Header("Images")]
+    public Image[] hearts;
+
     [Header("Slider")]
     public Slider volSlider;
 
@@ -63,11 +66,7 @@ public class CanvasManager : MonoBehaviour
         {
             returnToGameButton.onClick.AddListener(() => ReturnToGame());
         }
-        
-        if (livesText)
-        {
-            SetLivesText();
-        }
+
     }
 
     void ShowMainMenu()
@@ -80,7 +79,18 @@ public class CanvasManager : MonoBehaviour
     {
         if (GameManager.instance)
         {
-            livesText.text = GameManager.instance.lives.ToString();
+            //livesText.text = GameManager.instance.lives.ToString();
+            for (int i = 0; i < hearts.Length; i++)
+            {
+                if (i < GameManager.instance.lives)
+                {
+                    hearts[i].enabled = true;
+                }
+                else
+                {
+                    hearts[i].enabled = false;
+                }
+            }
         }
         else
         {
@@ -135,5 +145,8 @@ public class CanvasManager : MonoBehaviour
                 volSliderText.text = volSlider.value.ToString();
             }
         }
+
+
+
     }
 }

@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
                 _lives = maxLives;
             }
             
-            if (_lives < 0)
+            if (_lives <= 0)
             {
                 //game over code goes here
                 //death animation - into load scene
